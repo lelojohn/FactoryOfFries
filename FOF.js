@@ -236,16 +236,26 @@ function ResetProgress() {
 }
 
 function Dev_Hacks() {
-    if (HacksMenu.style.display === "none") {
-        HacksMenu.style.display = "block";
-      } else {
-        HacksMenu.style.display = "none";
-      }
+    const secretCode = "G!v3_me_Ch3@t5!!"; 
+    const userInput = prompt("Enter the secret code to access developer hacks:");
+    if (userInput && userInput.trim() === secretCode) {
+        savingEnabled = false; 
+        if (HacksMenu.style.display === "none") {
+            HacksMenu.style.display = "block";
+        } else {
+            HacksMenu.style.display = "none";
+        }
+
+        alert("Hacks activated. Progress after this point won't be saved.");
+    } else {
+        alert("Incorrect code. Access denied.");
+    }
 }
+
 
 const FreeUpgradesActivateButton = document.getElementById("FreeUpgradeStyles");
     FreeUpgradesActivateButton.addEventListener("click", function() {
-        savingEnabled = false;
+        document.getElementById("FreeUpgradeStyles").textContent = "Activated!";
         localStorage.setItem("FPC_UpgradeCost", FPC_UpgradeCost);
         localStorage.setItem("FPS_UpgradeCost", FPS_UpgradeCost);
         FPC_UpgradeCost = 0;
