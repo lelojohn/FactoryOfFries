@@ -7,11 +7,16 @@ let FPC_UpgradeLevel = parseFloat(localStorage.getItem("FPC_UpgradeLevel")) || 1
 let FPS_UpgradeLevel = parseFloat(localStorage.getItem("FPS_UpgradeLevel")) || 1;
 let savingEnabled = true;
 window.onload = function() {
-    Fries.textContent = "Fries: " + Math.round(FriesEarned * 10) / 10;
+    Fries.textContent = "Fries: " + formatFries(Math.round(FriesEarned * 10) / 10);
     resetPassiveGeneration();
     StatsButton.style.whiteSpace = "pre-line";
-    StatsButton.textContent = "Stats:\n_________________\nFries Per Click: " + Math.round(FriesPerClick * 10) /10 +" | Level: "+ FPC_UpgradeLevel + "\nUpgrade Cost : " + Math.round(FPC_UpgradeCost)  +"\n_________________\nFries per second: "+ Math.round(FriesPerSecond* 10) / 10+" | Level: "+ FPS_UpgradeLevel + "\nUpgrade Cost: "+Math.round(FPS_UpgradeCost);
-
+    StatsButton.textContent =
+  "Stats:\n_________________\nFries Per Click: " + formatFries(FriesPerClick) +
+  " | Level: " + FPC_UpgradeLevel +
+  "\nUpgrade Cost: " + formatFries(FPC_UpgradeCost) +
+  "\n_________________\nFries Per Second: " + formatFries(FriesPerSecond) +
+  " | Level: " + FPS_UpgradeLevel +
+  "\nUpgrade Cost: " + formatFries(FPS_UpgradeCost);
 }
 // New accumulators for leftover fractions
 let clickFraction = 0;
@@ -38,7 +43,7 @@ ClickDiv.addEventListener("click", function() {
     if (savingEnabled) localStorage.setItem("FPS_UpgradeCost", FPS_UpgradeCost);
     if (savingEnabled) localStorage.setItem("FPC_UpgradeLevel", FPC_UpgradeLevel);
     if (savingEnabled) localStorage.setItem("FPS_UpgradeLevel", FPS_UpgradeLevel);
-    Fries.textContent = "Fries: " + Math.round(FriesEarned * 10) / 10;
+    Fries.textContent = "Fries: " + formatFries(Math.round(FriesEarned * 10) / 10);
 });
 
 
@@ -56,15 +61,20 @@ FriesPerClickUpgrade.addEventListener("click", function() {
         if (savingEnabled) localStorage.setItem("FPC_UpgradeLevel", FPC_UpgradeLevel);
         if (savingEnabled) localStorage.setItem("FPS_UpgradeLevel", FPS_UpgradeLevel);
 
-        Fries.textContent = "Fries: " + Math.round(FriesEarned * 10) / 10;
+        Fries.textContent = "Fries: " + formatFries(Math.round(FriesEarned * 10) / 10);
 
         FriesPerClick = FriesPerClick *=1.2; //Amount to upgrade Fries per click by
         FPC_UpgradeCost = FPC_UpgradeCost *=1.2; //Amount to upgrade the upgrade cost by
         FPC_UpgradeLevel = FPC_UpgradeLevel +=1;
 
         StatsButton.style.whiteSpace = "pre-line"; //Makes sure to update the stats with the new ones
-        StatsButton.textContent = "Stats:\n_________________\nFries Per Click: " + Math.round(FriesPerClick * 10) /10 + " | Level: "+ FPC_UpgradeLevel + "\nUpgrade Cost : " + Math.round(FPC_UpgradeCost) +"\n_________________\nFries per second: "+ Math.round(FriesPerSecond* 10) / 10+" | Level: "+ FPS_UpgradeLevel + "\nUpgrade Cost: "+Math.round(FPS_UpgradeCost);
-
+        StatsButton.textContent =
+  "Stats:\n_________________\nFries Per Click: " + formatFries(FriesPerClick) +
+  " | Level: " + FPC_UpgradeLevel +
+  "\nUpgrade Cost: " + formatFries(FPC_UpgradeCost) +
+  "\n_________________\nFries Per Second: " + formatFries(FriesPerSecond) +
+  " | Level: " + FPS_UpgradeLevel +
+  "\nUpgrade Cost: " + formatFries(FPS_UpgradeCost);
         console.log(FriesPerClick)
         console.log(FPC_UpgradeCost)
         console.log(FPC_UpgradeLevel)
@@ -88,7 +98,7 @@ FriesPerSecondUpgrade.addEventListener("click", function() {
         if (savingEnabled) localStorage.setItem("FPC_UpgradeLevel", FPC_UpgradeLevel);
         if (savingEnabled) localStorage.setItem("FPS_UpgradeLevel", FPS_UpgradeLevel);
 
-        Fries.textContent = "Fries: " + Math.round(FriesEarned * 10) / 10;
+        Fries.textContent = "Fries: " + formatFries(Math.round(FriesEarned * 10) / 10);
 
         if (FriesPerSecond < 1) {
           FriesPerSecond = FriesPerSecond +=1
@@ -104,8 +114,13 @@ FriesPerSecondUpgrade.addEventListener("click", function() {
         FPS_UpgradeLevel = FPS_UpgradeLevel +=1;
 
         StatsButton.style.whiteSpace = "pre-line"; //Makes sure to update the stats with the new ones
-        StatsButton.textContent = "Stats:\n_________________\nFries Per Click: " + Math.round(FriesPerClick * 10) /10 +" | Level: "+ FPC_UpgradeLevel + "\nUpgrade Cost : " + Math.round(FPC_UpgradeCost)  +"\n_________________\nFries per second: "+ Math.round(FriesPerSecond* 10) / 10+" | Level: "+ FPS_UpgradeLevel + "\nUpgrade Cost: "+Math.round(FPS_UpgradeCost);
-
+        StatsButton.textContent =
+  "Stats:\n_________________\nFries Per Click: " + formatFries(FriesPerClick) +
+  " | Level: " + FPC_UpgradeLevel +
+  "\nUpgrade Cost: " + formatFries(FPC_UpgradeCost) +
+  "\n_________________\nFries Per Second: " + formatFries(FriesPerSecond) +
+  " | Level: " + FPS_UpgradeLevel +
+  "\nUpgrade Cost: " + formatFries(FPS_UpgradeCost);
         console.log(FriesPerSecond)
         console.log(FPS_UpgradeCost)
         console.log(FPS_UpgradeLevel)
@@ -175,7 +190,7 @@ function resetPassiveGeneration() {
                 FriesEarned += wholeFries;
                 if (savingEnabled) localStorage.setItem("FriesEarned", FriesEarned);
                 passiveRemainder -= wholeFries;
-                Fries.textContent = "Fries: " + Math.round(FriesEarned * 10) / 10;
+                Fries.textContent = "Fries: " + formatFries(Math.round(FriesEarned * 10) / 10);
             }
         }, intervalTime);
     }
@@ -228,15 +243,21 @@ function ResetProgress() {
         localStorage.setItem("FPS_UpgradeCost", FPS_UpgradeCost);
         localStorage.setItem("FPC_UpgradeLevel", FPC_UpgradeLevel);
         localStorage.setItem("FPS_UpgradeLevel", FPS_UpgradeLevel);
-        Fries.textContent = "Fries: " + FriesEarned;
+        Fries.textContent = "Fries: " + formatFries(Math.round(FriesEarned * 10) / 10);
         StatsButton.style.whiteSpace = "pre-line";
-        StatsButton.textContent = "Stats:"+"\n_________________"+"\nFries Per Click: 1 | Level: 1"+"\nUpgrade Cost: 15"+" \n_________________"+"\nFries per second: 0 | Level: 1"+"\nUpgrade Cost: 50";
+        StatsButton.textContent =
+        "Stats:\n_________________\nFries Per Click: " + formatFries(FriesPerClick) +
+        " | Level: " + FPC_UpgradeLevel +
+        "\nUpgrade Cost: " + formatFries(FPC_UpgradeCost) +
+        "\n_________________\nFries Per Second: " + formatFries(FriesPerSecond) +
+        " | Level: " + FPS_UpgradeLevel +
+        "\nUpgrade Cost: " + formatFries(FPS_UpgradeCost);
         document.getElementById("timer").textContent = "Time: 0d 00h 00m 00s";
     }
 }
 
 function Dev_Hacks() {
-    const secretCode = "G!v3_me_Ch3@t5!!"; 
+    const secretCode = "1234"; 
     const userInput = prompt("Enter the secret code to access developer hacks:");
     if (userInput && userInput.trim() === secretCode) {
         savingEnabled = false; 
@@ -261,3 +282,22 @@ const FreeUpgradesActivateButton = document.getElementById("FreeUpgradeStyles");
         FPC_UpgradeCost = 0;
         FPS_UpgradeCost = 0;
     });
+
+    function formatFries(count) {
+        const suffixes = [
+            "", " thousand", " million", " billion", " trillion"," quadrillion", " quintillion", " sextillion", " septillion", " octillion", " nonillion", " decillion", " undecillion", " duodecillion", " tredecillion", " quattuordecillion", " quindecillion", " sexdecillion", " septendecillion", " octodecillion", " novemdecillion", " vigintillion", " Unvigintillion", " Duovigintillion", " Tresvigintillion", " Quattuorvigintillion", " Quinvigintillion", " Sexvigintillion", " Septenvigintillion", " Octovigintillion", " Novemvigintillion", " Trigintillion", " Untrigintillion", " Duotrigintillion", " Tretrigintillion", " Quattuortrigintillion", " Quintrigintillion", " Sextrigintillion", " Septentrigintillion", " Octotrigintillion", " Novemtrigintillion", " Quadragintillion", " Unquadragintillion", " Duoquadragintillion", " Trequadragintillion", " Quattuorquadragintillion", " Quinquadragintillion", " Sexquadragintillion", " Septenquadragintillion", " Octoquadragintillion", " Novemquadragintillion", " Quinquagintillion", " Unquinquagintillion", " Duoquinquagintillion", " Trequinquagintillion", " Quattuorquinquagintillion", " Quinquinquagintillion", " Sexquinquagintillion", " Septenquinquagintillion", " Octoquinquagintillion", " Novemquinquagintillion", " Sexagintillion", " Unsexagintillion", " Duosexagintillion", " Tresexagintillion", " Quattuorsexagintillion", " Quinsexagintillion", " Sexsexagintillion", " Septensexagintillion", " Octosexagintillion", " Novemsexagintillion"
+        ];
+    
+        if (count < 1000) {
+            return Math.round(count * 10) / 10;
+        }
+    
+        let tier = Math.floor(Math.log10(count) / 3);
+        if (tier >= suffixes.length) tier = suffixes.length - 1;
+    
+        const suffix = suffixes[tier];
+        const scale = Math.pow(10, tier * 3);
+        const scaled = (count / scale).toFixed(2);
+    
+        return scaled + suffix;
+    }
