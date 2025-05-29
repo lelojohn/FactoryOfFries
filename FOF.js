@@ -5,6 +5,7 @@ let FriesPerSecond = parseFloat(localStorage.getItem("FriesPerSecond")) || 0;
 let FPS_UpgradeCost = parseFloat(localStorage.getItem("FPS_UpgradeCost")) || 50;
 let FPC_UpgradeLevel = parseFloat(localStorage.getItem("FPC_UpgradeLevel")) || 1;
 let FPS_UpgradeLevel = parseFloat(localStorage.getItem("FPS_UpgradeLevel")) || 1;
+let savingEnabled = true;
 window.onload = function() {
     Fries.textContent = "Fries: " + Math.round(FriesEarned * 10) / 10;
     resetPassiveGeneration();
@@ -30,13 +31,13 @@ ClickDiv.addEventListener("click", function() {
     }
 
     FriesEarned += wholeClick;
-    localStorage.setItem("FriesEarned", FriesEarned);
-    localStorage.setItem("FriesPerClick", FriesPerClick);
-    localStorage.setItem("FPC_UpgradeCost", FPC_UpgradeCost);
-    localStorage.setItem("FriesPerSecond", FriesPerSecond);
-    localStorage.setItem("FPS_UpgradeCost", FPS_UpgradeCost);
-    localStorage.setItem("FPC_UpgradeLevel", FPC_UpgradeLevel);
-    localStorage.setItem("FPS_UpgradeLevel", FPS_UpgradeLevel);
+    if (savingEnabled) localStorage.setItem("FriesEarned", FriesEarned);
+    if (savingEnabled) localStorage.setItem("FriesPerClick", FriesPerClick);
+    if (savingEnabled) localStorage.setItem("FPC_UpgradeCost", FPC_UpgradeCost);
+    if (savingEnabled) localStorage.setItem("FriesPerSecond", FriesPerSecond);
+    if (savingEnabled) localStorage.setItem("FPS_UpgradeCost", FPS_UpgradeCost);
+    if (savingEnabled) localStorage.setItem("FPC_UpgradeLevel", FPC_UpgradeLevel);
+    if (savingEnabled) localStorage.setItem("FPS_UpgradeLevel", FPS_UpgradeLevel);
     Fries.textContent = "Fries: " + Math.round(FriesEarned * 10) / 10;
 });
 
@@ -47,13 +48,13 @@ FriesPerClickUpgrade.addEventListener("click", function() {
     FPC_UpgradeCost = Math.round(FPC_UpgradeCost)
     if (FPC_UpgradeCost <= FriesEarned ) {
         FriesEarned -= FPC_UpgradeCost;
-        localStorage.setItem("FriesEarned", FriesEarned);
-        localStorage.setItem("FriesPerClick", FriesPerClick);
-        localStorage.setItem("FPC_UpgradeCost", FPC_UpgradeCost);
-        localStorage.setItem("FriesPerSecond", FriesPerSecond);
-        localStorage.setItem("FPS_UpgradeCost", FPS_UpgradeCost);
-        localStorage.setItem("FPC_UpgradeLevel", FPC_UpgradeLevel);
-        localStorage.setItem("FPS_UpgradeLevel", FPS_UpgradeLevel);
+        if (savingEnabled) localStorage.setItem("FriesEarned", FriesEarned);
+        if (savingEnabled) localStorage.setItem("FriesPerClick", FriesPerClick);
+        if (savingEnabled) localStorage.setItem("FPC_UpgradeCost", FPC_UpgradeCost);
+        if (savingEnabled) localStorage.setItem("FriesPerSecond", FriesPerSecond);
+        if (savingEnabled) localStorage.setItem("FPS_UpgradeCost", FPS_UpgradeCost);
+        if (savingEnabled) localStorage.setItem("FPC_UpgradeLevel", FPC_UpgradeLevel);
+        if (savingEnabled) localStorage.setItem("FPS_UpgradeLevel", FPS_UpgradeLevel);
 
         Fries.textContent = "Fries: " + Math.round(FriesEarned * 10) / 10;
 
@@ -79,13 +80,13 @@ FriesPerSecondUpgrade.addEventListener("click", function() {
     FPS_UpgradeCost = Math.round(FPS_UpgradeCost)
     if (FPS_UpgradeCost <= FriesEarned ) {
         FriesEarned -= FPS_UpgradeCost;
-        localStorage.setItem("FriesEarned", FriesEarned);
-        localStorage.setItem("FriesPerClick", FriesPerClick);
-        localStorage.setItem("FPC_UpgradeCost", FPC_UpgradeCost);
-        localStorage.setItem("FriesPerSecond", FriesPerSecond);
-        localStorage.setItem("FPS_UpgradeCost", FPS_UpgradeCost);
-        localStorage.setItem("FPC_UpgradeLevel", FPC_UpgradeLevel);
-        localStorage.setItem("FPS_UpgradeLevel", FPS_UpgradeLevel);
+        if (savingEnabled) localStorage.setItem("FriesEarned", FriesEarned);
+        if (savingEnabled) localStorage.setItem("FriesPerClick", FriesPerClick);
+        if (savingEnabled) localStorage.setItem("FPC_UpgradeCost", FPC_UpgradeCost);
+        if (savingEnabled) localStorage.setItem("FriesPerSecond", FriesPerSecond);
+        if (savingEnabled) localStorage.setItem("FPS_UpgradeCost", FPS_UpgradeCost);
+        if (savingEnabled) localStorage.setItem("FPC_UpgradeLevel", FPC_UpgradeLevel);
+        if (savingEnabled) localStorage.setItem("FPS_UpgradeLevel", FPS_UpgradeLevel);
 
         Fries.textContent = "Fries: " + Math.round(FriesEarned * 10) / 10;
 
@@ -172,7 +173,7 @@ function resetPassiveGeneration() {
             const wholeFries = Math.floor(passiveRemainder);
             if (wholeFries >= 1) {
                 FriesEarned += wholeFries;
-                localStorage.setItem("FriesEarned", FriesEarned);
+                if (savingEnabled) localStorage.setItem("FriesEarned", FriesEarned);
                 passiveRemainder -= wholeFries;
                 Fries.textContent = "Fries: " + Math.round(FriesEarned * 10) / 10;
             }
@@ -200,13 +201,13 @@ function RandomNumberGenerator() {
 
 setInterval(updateButtonStyles, 20); // update every 20ms
 setInterval(() => {
-    localStorage.setItem("FriesEarned", FriesEarned);
-    localStorage.setItem("FriesPerClick", FriesPerClick);
-    localStorage.setItem("FPC_UpgradeCost", FPC_UpgradeCost);
-    localStorage.setItem("FriesPerSecond", FriesPerSecond);
-    localStorage.setItem("FPS_UpgradeCost", FPS_UpgradeCost);
-    localStorage.setItem("FPC_UpgradeLevel", FPC_UpgradeLevel);
-    localStorage.setItem("FPS_UpgradeLevel", FPS_UpgradeLevel);
+    if (savingEnabled) localStorage.setItem("FriesEarned", FriesEarned);
+    if (savingEnabled) localStorage.setItem("FriesPerClick", FriesPerClick);
+    if (savingEnabled) localStorage.setItem("FPC_UpgradeCost", FPC_UpgradeCost);
+    if (savingEnabled) localStorage.setItem("FriesPerSecond", FriesPerSecond);
+    if (savingEnabled) localStorage.setItem("FPS_UpgradeCost", FPS_UpgradeCost);
+    if (savingEnabled) localStorage.setItem("FPC_UpgradeLevel", FPC_UpgradeLevel);
+    if (savingEnabled) localStorage.setItem("FPS_UpgradeLevel", FPS_UpgradeLevel);
 }, 1000);
 
 function ResetProgress() {
@@ -233,3 +234,20 @@ function ResetProgress() {
         document.getElementById("timer").textContent = "Time: 0d 00h 00m 00s";
     }
 }
+
+function Dev_Hacks() {
+    if (HacksMenu.style.display === "none") {
+        HacksMenu.style.display = "block";
+      } else {
+        HacksMenu.style.display = "none";
+      }
+}
+
+const FreeUpgradesActivateButton = document.getElementById("FreeUpgradeStyles");
+    FreeUpgradesActivateButton.addEventListener("click", function() {
+        savingEnabled = false;
+        localStorage.setItem("FPC_UpgradeCost", FPC_UpgradeCost);
+        localStorage.setItem("FPS_UpgradeCost", FPS_UpgradeCost);
+        FPC_UpgradeCost = 0;
+        FPS_UpgradeCost = 0;
+    });
