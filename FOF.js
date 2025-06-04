@@ -1,4 +1,6 @@
-let FriesEarned = parseFloat(localStorage.getItem("FriesEarned")) || 0;
+let storedFries = parseFloat(localStorage.getItem("FriesEarned")) || 0;
+let storedHash = localStorage.getItem("FriesEarnedHash");
+let FriesEarned = (storedHash && isValidFries(storedFries, storedHash)) ? storedFries : 0;
 let FriesPerClick = parseFloat(localStorage.getItem("FriesPerClick")) || 1;
 let FPC_UpgradeCost = parseFloat(localStorage.getItem("FPC_UpgradeCost")) || 15;
 let FriesPerSecond = parseFloat(localStorage.getItem("FriesPerSecond")) || 0;
@@ -6,6 +8,20 @@ let FPS_UpgradeCost = parseFloat(localStorage.getItem("FPS_UpgradeCost")) || 50;
 let FPC_UpgradeLevel = parseFloat(localStorage.getItem("FPC_UpgradeLevel")) || 1;
 let FPS_UpgradeLevel = parseFloat(localStorage.getItem("FPS_UpgradeLevel")) || 1;
 let savingEnabled = true;
+
+
+function SaveGame() {
+    if (savingEnabled) localStorage.setItem("FriesEarned", FriesEarned);
+    localStorage.setItem("FriesEarnedHash", generateHash(FriesEarned));
+    if (savingEnabled) localStorage.setItem("FriesPerClick", FriesPerClick);
+    if (savingEnabled) localStorage.setItem("FPC_UpgradeCost", FPC_UpgradeCost);
+    if (savingEnabled) localStorage.setItem("FriesPerSecond", FriesPerSecond);
+    if (savingEnabled) localStorage.setItem("FPS_UpgradeCost", FPS_UpgradeCost);
+    if (savingEnabled) localStorage.setItem("FPC_UpgradeLevel", FPC_UpgradeLevel);
+    if (savingEnabled) localStorage.setItem("FPS_UpgradeLevel", FPS_UpgradeLevel);
+}
+
+
 window.onload = function() {
     Fries.textContent = "Fries: " + formatFries(Math.round(FriesEarned * 10) / 10);
     resetPassiveGeneration();
@@ -24,6 +40,15 @@ let passiveFraction = 0;
 
 const ClickDiv = document.getElementById("Clicker");
 
+function generateHash(value) {
+    return btoa((value * 17.3).toString().split('').reverse().join(''));
+}
+
+function isValidFries(fries, storedHash) {
+    return generateHash(fries) === storedHash;
+}
+
+
 ClickDiv.addEventListener("click", function() {
     // Add click amount and accumulate leftover fractions
     let totalClick = FriesPerClick;
@@ -36,13 +61,7 @@ ClickDiv.addEventListener("click", function() {
     }
 
     FriesEarned += wholeClick;
-    if (savingEnabled) localStorage.setItem("FriesEarned", FriesEarned);
-    if (savingEnabled) localStorage.setItem("FriesPerClick", FriesPerClick);
-    if (savingEnabled) localStorage.setItem("FPC_UpgradeCost", FPC_UpgradeCost);
-    if (savingEnabled) localStorage.setItem("FriesPerSecond", FriesPerSecond);
-    if (savingEnabled) localStorage.setItem("FPS_UpgradeCost", FPS_UpgradeCost);
-    if (savingEnabled) localStorage.setItem("FPC_UpgradeLevel", FPC_UpgradeLevel);
-    if (savingEnabled) localStorage.setItem("FPS_UpgradeLevel", FPS_UpgradeLevel);
+    SaveGame()
     Fries.textContent = "Fries: " + formatFries(Math.round(FriesEarned * 10) / 10);
 });
 
@@ -53,14 +72,7 @@ FriesPerClickUpgrade.addEventListener("click", function() {
     FPC_UpgradeCost = Math.round(FPC_UpgradeCost)
     if (FPC_UpgradeCost <= FriesEarned ) {
         FriesEarned -= FPC_UpgradeCost;
-        if (savingEnabled) localStorage.setItem("FriesEarned", FriesEarned);
-        if (savingEnabled) localStorage.setItem("FriesPerClick", FriesPerClick);
-        if (savingEnabled) localStorage.setItem("FPC_UpgradeCost", FPC_UpgradeCost);
-        if (savingEnabled) localStorage.setItem("FriesPerSecond", FriesPerSecond);
-        if (savingEnabled) localStorage.setItem("FPS_UpgradeCost", FPS_UpgradeCost);
-        if (savingEnabled) localStorage.setItem("FPC_UpgradeLevel", FPC_UpgradeLevel);
-        if (savingEnabled) localStorage.setItem("FPS_UpgradeLevel", FPS_UpgradeLevel);
-
+        SaveGame()
         Fries.textContent = "Fries: " + formatFries(Math.round(FriesEarned * 10) / 10);
 
         FriesPerClick = FriesPerClick *=1.2; //Amount to upgrade Fries per click by
@@ -90,14 +102,7 @@ FriesPerSecondUpgrade.addEventListener("click", function() {
     FPS_UpgradeCost = Math.round(FPS_UpgradeCost)
     if (FPS_UpgradeCost <= FriesEarned ) {
         FriesEarned -= FPS_UpgradeCost;
-        if (savingEnabled) localStorage.setItem("FriesEarned", FriesEarned);
-        if (savingEnabled) localStorage.setItem("FriesPerClick", FriesPerClick);
-        if (savingEnabled) localStorage.setItem("FPC_UpgradeCost", FPC_UpgradeCost);
-        if (savingEnabled) localStorage.setItem("FriesPerSecond", FriesPerSecond);
-        if (savingEnabled) localStorage.setItem("FPS_UpgradeCost", FPS_UpgradeCost);
-        if (savingEnabled) localStorage.setItem("FPC_UpgradeLevel", FPC_UpgradeLevel);
-        if (savingEnabled) localStorage.setItem("FPS_UpgradeLevel", FPS_UpgradeLevel);
-
+        SaveGame()
         Fries.textContent = "Fries: " + formatFries(Math.round(FriesEarned * 10) / 10);
 
         if (FriesPerSecond < 1) {
@@ -189,6 +194,7 @@ function resetPassiveGeneration() {
             if (wholeFries >= 1) {
                 FriesEarned += wholeFries;
                 if (savingEnabled) localStorage.setItem("FriesEarned", FriesEarned);
+                localStorage.setItem("FriesEarnedHash", generateHash(FriesEarned));
                 passiveRemainder -= wholeFries;
                 Fries.textContent = "Fries: " + formatFries(Math.round(FriesEarned * 10) / 10);
             }
@@ -216,13 +222,7 @@ function RandomNumberGenerator() {
 
 setInterval(updateButtonStyles, 20); // update every 20ms
 setInterval(() => {
-    if (savingEnabled) localStorage.setItem("FriesEarned", FriesEarned);
-    if (savingEnabled) localStorage.setItem("FriesPerClick", FriesPerClick);
-    if (savingEnabled) localStorage.setItem("FPC_UpgradeCost", FPC_UpgradeCost);
-    if (savingEnabled) localStorage.setItem("FriesPerSecond", FriesPerSecond);
-    if (savingEnabled) localStorage.setItem("FPS_UpgradeCost", FPS_UpgradeCost);
-    if (savingEnabled) localStorage.setItem("FPC_UpgradeLevel", FPC_UpgradeLevel);
-    if (savingEnabled) localStorage.setItem("FPS_UpgradeLevel", FPS_UpgradeLevel);
+    SaveGame()
 }, 1000);
 
 function ResetProgress() {
@@ -235,14 +235,7 @@ function ResetProgress() {
         FPS_UpgradeCost = 50;
         FPC_UpgradeLevel = 1;
         FPS_UpgradeLevel = 1;
-        localStorage.setItem("totalSeconds", totalSeconds);
-        localStorage.setItem("FriesEarned", FriesEarned);
-        localStorage.setItem("FriesPerClick", FriesPerClick);
-        localStorage.setItem("FPC_UpgradeCost", FPC_UpgradeCost);
-        localStorage.setItem("FriesPerSecond", FriesPerSecond);
-        localStorage.setItem("FPS_UpgradeCost", FPS_UpgradeCost);
-        localStorage.setItem("FPC_UpgradeLevel", FPC_UpgradeLevel);
-        localStorage.setItem("FPS_UpgradeLevel", FPS_UpgradeLevel);
+        SaveGame()
         Fries.textContent = "Fries: " + formatFries(Math.round(FriesEarned * 10) / 10);
         StatsButton.style.whiteSpace = "pre-line";
         StatsButton.textContent =
@@ -258,7 +251,7 @@ function ResetProgress() {
 
 function Bonus() {
     const EasterEgg = "1234"; 
-    const userInput = prompt("Enter the secret code to access developer hacks:");
+    const userInput = prompt("You found the bonus!");
     if (userInput && userInput.trim() === EasterEgg) {
         savingEnabled = false; 
         if (SecretMenu.style.display === "none") {
@@ -267,9 +260,9 @@ function Bonus() {
             SecretMenu.style.display = "none";
         }
 
-        alert("Hacks activated. Progress after this point won't be saved.");
+        alert("Whoop de doo.");
     } else {
-        alert("Incorrect code. Access denied.");
+        alert("What did you expect anyway?");
     }
 }
 
