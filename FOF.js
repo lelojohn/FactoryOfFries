@@ -256,15 +256,15 @@ function ResetProgress() {
     }
 }
 
-function Dev_Hacks() {
-    const secretCode = "1234"; 
+function Bonus() {
+    const EasterEgg = "1234"; 
     const userInput = prompt("Enter the secret code to access developer hacks:");
-    if (userInput && userInput.trim() === secretCode) {
+    if (userInput && userInput.trim() === EasterEgg) {
         savingEnabled = false; 
-        if (HacksMenu.style.display === "none") {
-            HacksMenu.style.display = "block";
+        if (SecretMenu.style.display === "none") {
+            SecretMenu.style.display = "block";
         } else {
-            HacksMenu.style.display = "none";
+            SecretMenu.style.display = "none";
         }
 
         alert("Hacks activated. Progress after this point won't be saved.");
@@ -301,3 +301,74 @@ const FreeUpgradesActivateButton = document.getElementById("FreeUpgradeStyles");
     
         return scaled + suffix;
     }
+
+    function getIP(json) {
+        console.log(json.ip)
+            }  
+
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-auth.js";
+  
+    const firebaseConfig = {
+      apiKey: "AIzaSyCC_ShT2yL3TNu-7LYpZEARsNEqutF7Hjc",
+      authDomain: "hahaimaginesuckingrhys.firebaseapp.com",
+      projectId: "hahaimaginesuckingrhys",
+      appId: "1:646854116067:web:35b897a81cc92e78dd3bd6"
+    };
+  
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+  
+
+    function setCookie(name, value, days = 365) {
+      const expires = new Date(Date.now() + days * 864e5).toUTCString();
+      document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/`;
+    }
+  
+    
+    function isBannedEmail(email) {
+      return email.trim().toLowerCase() === "yougothackedbozo.lol69@gmail.com";
+    }
+  
+    
+    function signInWithGoogle() {
+      signInWithPopup(auth, provider)
+        .then((result) => {
+          const email = result.user.email;
+          if (isBannedEmail(email)) {
+            alert("Access denied for your email.");
+            return signOut(auth).then(() => {
+              window.location.href = "https://www.google.com";
+            });
+          }
+  
+          setCookie("userEmail", email);
+          document.getElementById("status").innerText = "Signed in as: " + email;
+        })
+        .catch((error) => {
+          console.error("Sign-in failed:", error);
+          alert("You must sign in to use this site.");
+          window.location.href = "https://www.google.com";
+        });
+    }
+  
+    
+    window.onload = () => {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          const email = user.email;
+          if (isBannedEmail(email)) {
+            alert("Access denied for your email.");
+            return signOut(auth).then(() => {
+              window.location.href = "https://www.google.com";
+            });
+          }
+  
+          setCookie("userEmail", email);
+          document.getElementById("status").innerText = "Signed in as: " + email;
+        } else {
+          signInWithGoogle();
+        }
+      });
+    };
