@@ -158,7 +158,7 @@
     text-align: center;
 }
 
-#DevHacks {
+#Secret {
     position: fixed;
     bottom: 2px;
     left: 99%;
@@ -174,7 +174,7 @@
     text-align: center;
 }
 
-#HacksMenu {
+#SecretMenu {
     position: fixed;
     top:20%;left:55%;
     font-family: Arial, Helvetica, sans-serif;
