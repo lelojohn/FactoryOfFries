@@ -1,3 +1,4 @@
+let JerrySecret = false;
 let storedFries = parseFloat(localStorage.getItem("FriesEarned")) || 0;
 let storedHash = localStorage.getItem("FriesEarnedHash");
 
@@ -42,6 +43,101 @@ const saveState = (() => {
 })();
 
 function SaveGame() {
+
+    // Saving Achievements
+    localStorage.setItem("Achievements", JSON.stringify(Achievements));
+    localStorage.setItem("AmountOfAchievements", AmountOfAchievements);
+    achievementPopup.style.whiteSpace = "pre-line";
+    
+    // Fries Earned Achievements
+    if (FriesManager.get() >= 100 && !Achievements.includes(" Small Beginnings")) {
+        Achievements[AmountOfAchievements] = " Small Beginnings";
+        AmountOfAchievements += 1;
+        document.getElementById("achievementPopup").innerHTML = 
+            "<span class='VeryLargeText'>Achievement Get!<br><br></span><span class='LargeText'>Small Beginnings</span><br><br><span class='SmallText'>Earn 100 Fries.</span>";
+        showPopup(); 
+    }
+
+    if (FriesManager.get() >= 1000 && !Achievements.includes(" Getting Decent...")) {
+        Achievements[AmountOfAchievements] = " Getting Decent...";
+        AmountOfAchievements += 1;
+        document.getElementById("achievementPopup").innerHTML = 
+        "<span class='VeryLargeText'>Achievement Get!<br><br></span><span class='LargeText'>Getting Decent...</span><br><br><span class='SmallText'>Earn 1000 Fries.</span>";
+    showPopup(); 
+    }
+    if (FriesManager.get() >= 10000 && !Achievements.includes(" Frymaster")) {
+        Achievements[AmountOfAchievements] = " Frymaster";
+        AmountOfAchievements += 1;
+        document.getElementById("achievementPopup").innerHTML = 
+        "<span class='VeryLargeText'>Achievement Get!<br><br></span><span class='LargeText'>Frymaster</span><br><br><span class='SmallText'>Earn 10000 Fries.</span>";
+    showPopup(); 
+    }
+    if (FriesManager.get() >= 100000 && !Achievements.includes(" Factory Owner")) {
+        Achievements[AmountOfAchievements] = " Factory Owner";
+        AmountOfAchievements += 1;
+        document.getElementById("achievementPopup").innerHTML = 
+        "<span class='VeryLargeText'>Achievement Get!<br><br></span><span class='LargeText'>Factory Owner</span><br><br><span class='SmallText'>Earn 100000 Fries.</span>";
+    showPopup(); 
+    }
+
+    //FPC_UpgradeLevel Achievements
+    if (FPC_UpgradeLevel >= 2 && !Achievements.includes(" Clicker")) {
+        Achievements[AmountOfAchievements] = " Clicker";
+        AmountOfAchievements += 1;
+        document.getElementById("achievementPopup").innerHTML = 
+        "<span class='VeryLargeText'>Achievement Get!<br><br></span><span class='LargeText'>Clicker</span><br><br><span class='SmallText'>Upgrade your Fries Per Click.</span>";
+    showPopup(); 
+    }
+    if (FPC_UpgradeLevel >= 10 && !Achievements.includes(" Determined Clicker")) {
+        Achievements[AmountOfAchievements] = " Determined Clicker";
+        AmountOfAchievements += 1;
+        document.getElementById("achievementPopup").innerHTML = 
+        "<span class='VeryLargeText'>Achievement Get!<br><br></span><span class='LargeText'>Determined Clicker</span><br><br><span class='SmallText'>Reach a Fries Per Click level of at least 10.</span>";
+    showPopup(); 
+    }
+
+    //FPS_UpgradeLevel Achievements
+    if (FPS_UpgradeLevel >= 2 && !Achievements.includes(" Passive Income")) {
+        Achievements[AmountOfAchievements] = " Passive Income";
+        AmountOfAchievements += 1;
+        document.getElementById("achievementPopup").innerHTML = 
+        "<span class='VeryLargeText'>Achievement Get!<br><br></span><span class='LargeText'>Passive Income</span><br><br><span class='SmallText'>Upgrade your Fries Per Second.</span>";
+    showPopup(); 
+    }
+    if (FPS_UpgradeLevel >= 10 && !Achievements.includes(" Paid Workers")) {
+        Achievements[AmountOfAchievements] = " Paid Workers";
+        AmountOfAchievements += 1;
+        document.getElementById("achievementPopup").innerHTML = 
+        "<span class='VeryLargeText'>Achievement Get!<br><br></span><span class='LargeText'>Paid Workers</span><br><br><span class='SmallText'>Reach a Fries Per Second level of at least 10.</span>";
+    showPopup(); 
+    }
+
+    //FPC Achievements
+    if (FriesPerClick >= 10 && !Achievements.includes(" 10x Fries")) {
+        Achievements[AmountOfAchievements] = " 10x Fries";
+        AmountOfAchievements += 1;
+        document.getElementById("achievementPopup").innerHTML = 
+        "<span class='VeryLargeText'>Achievement Get!<br><br></span><span class='LargeText'>10x Fries</span><br><br><span class='SmallText'>Earn at least 10 Fries Per Click.</span>";
+    showPopup(); 
+    }
+
+    //FPS Achievements
+    if (FriesPerSecond >= 1 && !Achievements.includes(" 1 at a Time")) {
+        Achievements[AmountOfAchievements] = " 1 at a Time";
+        AmountOfAchievements += 1;
+        document.getElementById("achievementPopup").innerHTML = 
+        "<span class='VeryLargeText'>Achievement Get!<br><br></span><span class='LargeText'>1 at a Time</span><br><br><span class='SmallText'>Earn at least 1 Fry Per Second.</span>";
+    showPopup(); 
+    }
+
+    //Secret Achievements
+    if (JerrySecret == true && !Achievements.includes(" Blessed by Jerry")) {
+        Achievements[AmountOfAchievements] = " Blessed by Jerry";
+        AmountOfAchievements += 1;
+    }
+    document.getElementById("AchievementsList").textContent = ("Achievements:\n\n" + "\u2022 " + Achievements.join("\n\u2022 "));
+    localStorage.setItem("AchievementsKey", JSON.stringify(Achievements));
+
     if (saveState.isEnabled()) {
         localStorage.setItem("FriesPerClick", FriesPerClick);
         localStorage.setItem("FPC_UpgradeCost", FPC_UpgradeCost);
@@ -65,6 +161,15 @@ window.onload = function() {
         "\n_________________\nFries Per Second: " + formatFries(FriesPerSecond) +
         " | Level: " + FPS_UpgradeLevel +
         "\nUpgrade Cost: " + formatFries(FPS_UpgradeCost);
+
+    // Load saved achievements
+    const savedAchievements = JSON.parse(localStorage.getItem("Achievements")) || [];
+    const savedAmountOfAchievements = parseInt(localStorage.getItem("AmountOfAchievements")) || 0;
+    Achievements.length = 0;
+    Achievements.push(...savedAchievements);
+    AmountOfAchievements = savedAmountOfAchievements;
+
+    document.getElementById("AchievementsList").textContent = ("Achievements:\n\n" + "\u2022 " + Achievements.join("\n\u2022 "));
 }
 
 let clickFraction = 0;
@@ -156,6 +261,9 @@ FriesPerSecondUpgrade.addEventListener("click", function() {
     }
 });
 
+// Your remaining code continues as is...
+
+
 let totalSeconds = parseInt(localStorage.getItem("totalSeconds")) || 0;
 
 function updateTimer() {
@@ -221,7 +329,7 @@ function updateButtonStyles() {
 }
 
 setInterval(updateButtonStyles, 20);
-setInterval(() => SaveGame(), 1000);
+setInterval(() => SaveGame(), 100);
 
 document.getElementById("FreeUpgradeStyles").addEventListener("click", function () {
     this.textContent = "Activated!";
@@ -232,7 +340,7 @@ document.getElementById("FreeUpgradeStyles").addEventListener("click", function 
 });
 
 function formatFries(count) {
-    const suffixes = ["", " thousand", " million", " billion", " trillion", " quadrillion", " quintillion"];
+    const suffixes = ["", " thousand", " million", " billion", " trillion", " quadrillion", " quintillion", " sextillion"];
     if (count < 1000) return Math.round(count * 10) / 10;
     const tier = Math.min(Math.floor(Math.log10(count) / 3), suffixes.length - 1);
     const scale = Math.pow(10, tier * 3);
@@ -240,12 +348,17 @@ function formatFries(count) {
 }
 
 function Bonus() {
-    const EasterEgg = "1234";
+    const EasterEgg = "fr33H@CK5.4me";
+    const JerryEgg = 'Jerry'
     const userInput = prompt("You found the bonus!");
     if (userInput && userInput.trim() === EasterEgg) {
         saveState.disable();
         SecretMenu.style.display = (SecretMenu.style.display === "none") ? "block" : "none";
-        alert("Whoop de doo.");
+        alert("This is allowed, right?");
+    }
+    else if (userInput && userInput.trim() === JerryEgg) {
+        alert("JERREHHHHH")
+        JerrySecret = true;
     } else {
         alert("What did you expect anyway?");
     }
@@ -254,6 +367,11 @@ function Bonus() {
 function ResetProgress() {
     if (window.confirm("Are you sure you want to do this?")) {
         FriesManager.set(0);
+        while (Achievements.length > 0) {
+            Achievements.pop();
+        }
+        Achievements = [" The Journey Begins"]
+        AmountOfAchievements = 1;
         totalSeconds = 0;
         FriesPerClick = 1;
         FPC_UpgradeCost = 15;
@@ -261,7 +379,9 @@ function ResetProgress() {
         FPS_UpgradeCost = 20;
         FPC_UpgradeLevel = 1;
         FPS_UpgradeLevel = 1;
+        JerrySecret = false;
         SaveGame();
+        document.getElementById("AchievementsList").textContent = ("Achievements:\n\n"+"\u2022 "+Achievements);
         Fries.textContent = "Fries: " + formatFries(FriesManager.get());
         StatsButton.textContent =
             "Stats:\n_________________\nFries Per Click: " + formatFries(FriesPerClick) +
@@ -272,4 +392,36 @@ function ResetProgress() {
             "\nUpgrade Cost: " + formatFries(FPS_UpgradeCost);
         document.getElementById("timer").textContent = "Time: 0d 00h 00m 00s";
     }
+}
+
+function DisplayAchievements() {
+ if (AchievementsList.style.display == "none") {
+    AchievementsList.style.display = "block";
+    AchievementsList.style.whiteSpace = "pre-line";
+    console.log(StoredAchievements)
+    document.getElementById("AchievementsList").textContent = ("Achievements:\n\n"+"\u2022 "+Achievements);
+ }
+ else {
+    AchievementsList.style.display = "none";
+ }
+
+}
+
+let Achievements = [" The Journey Begins"]
+
+let AmountOfAchievements = 1;
+Achievements[AmountOfAchievements] = " The Journey Begins";
+AmountOfAchievements += 1;
+
+const StoredAchievements = JSON.parse(localStorage.getItem('AchievementsKey'));
+
+
+function showPopup() {
+    var popup = document.getElementById("achievementPopup");
+    popup.classList.add("show");
+    
+    // Automatically hide after 3 seconds
+    setTimeout(function() {
+        popup.classList.remove("show");
+    }, 4000);
 }
