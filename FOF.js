@@ -425,3 +425,16 @@ function showPopup() {
         popup.classList.remove("show");
     }, 4000);
 }
+
+
+const music = document.getElementById('background-music');
+let isPlaying = false;
+
+function toggleMusic() {
+  if (isPlaying) {
+    music.pause();
+  } else {
+    music.play();
+  }
+  isPlaying = !isPlaying;
+}
