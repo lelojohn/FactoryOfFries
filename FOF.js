@@ -27,6 +27,8 @@ const FriesManager = (() => {
     };
 })();
 
+
+
 let FriesPerClick = parseFloat(localStorage.getItem("FriesPerClick")) || 1;
 let ClickerUpgradeCost = parseFloat(localStorage.getItem("ClickerUpgradeCost")) || 15;
 let FriesPerSecond = parseFloat(localStorage.getItem("FriesPerSecond")) || 0;
@@ -151,20 +153,6 @@ function SaveGame() {
     }
 }
 
-window.onload = function(F) {
-    Fries.textContent = "Fries: " + formatFries(Math.round(FriesManager.get() * 10) / 10);
-    resetPassiveGeneration();
-
-
-    // Load saved achievements
-    const savedAchievements = JSON.parse(localStorage.getItem("Achievements")) || [];
-    const savedAmountOfAchievements = parseInt(localStorage.getItem("AmountOfAchievements")) || 0;
-    Achievements.length = 0;
-    Achievements.push(...savedAchievements);
-    AmountOfAchievements = savedAmountOfAchievements;
-
-    document.getElementById("AchievementsList").textContent = ("Achievements:\n\n" + "\u2022 " + Achievements.join("\n\u2022 "));
-}
 
 let clickFraction = 0;
 let passiveFraction = 0;
@@ -455,11 +443,11 @@ function autoResizeText() {
 }
 
 // Run on load
-window.onload = autoResizeText;
+
 // Run whenever the window resizes
 window.onresize = autoResizeText;
 
-window.onload = updateFries;
+
 
 function updateFries() {
     document.getElementById("Fries").textContent = ("Fries: " + FriesManager.get());
@@ -476,3 +464,30 @@ function toggleColor() {
   }
   isdarkshade = !isdarkshade;
 }
+
+function loadAchievementsFromStorage() {
+    const savedAchievements = JSON.parse(localStorage.getItem("Achievements")) || [];
+    const savedAmountOfAchievements = parseInt(localStorage.getItem("AmountOfAchievements")) || 0;
+    Achievements.length = 0;
+    Achievements.push(...savedAchievements);
+    AmountOfAchievements = savedAmountOfAchievements;
+    document.getElementById("AchievementsList").textContent =
+        "Achievements:\n\n" + "\u2022 " + Achievements.join("\n\u2022 ");
+}
+
+window.addEventListener("load", function() {
+    // ✅ Load Achievements first
+    loadAchievementsFromStorage();
+
+    // ✅ Update Fries display
+    Fries.textContent = "Fries: " + formatFries(Math.round(FriesManager.get() * 10) / 10);
+
+    // ✅ Reset passive income interval
+    resetPassiveGeneration();
+
+    // ✅ Auto-resize upgrade info text
+    autoResizeText();
+
+    // ✅ Update Fries text once
+    updateFries();
+});
