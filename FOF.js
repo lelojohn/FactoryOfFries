@@ -1,3 +1,4 @@
+const sessionKey = Math.random().toString(36).substring(2) + Date.now();
 let JerrySecret = false;
 let storedFries = parseFloat(localStorage.getItem("FriesEarned")) || 0;
 let storedHash = localStorage.getItem("FriesEarnedHash");
@@ -27,9 +28,9 @@ const FriesManager = (() => {
 })();
 
 let FriesPerClick = parseFloat(localStorage.getItem("FriesPerClick")) || 1;
-let FPC_UpgradeCost = parseFloat(localStorage.getItem("FPC_UpgradeCost")) || 15;
+let ClickerUpgradeCost = parseFloat(localStorage.getItem("ClickerUpgradeCost")) || 15;
 let FriesPerSecond = parseFloat(localStorage.getItem("FriesPerSecond")) || 0;
-let FPS_UpgradeCost = parseFloat(localStorage.getItem("FPS_UpgradeCost")) || 20;
+let WorkersUpgradeCost = parseFloat(localStorage.getItem("WorkersUpgradeCost")) || 20;
 let FPC_UpgradeLevel = parseFloat(localStorage.getItem("FPC_UpgradeLevel")) || 1;
 let FPS_UpgradeLevel = parseFloat(localStorage.getItem("FPS_UpgradeLevel")) || 1;
 
@@ -44,6 +45,8 @@ const saveState = (() => {
 
 function SaveGame() {
 
+    
+
     // Saving Achievements
     localStorage.setItem("Achievements", JSON.stringify(Achievements));
     localStorage.setItem("AmountOfAchievements", AmountOfAchievements);
@@ -57,7 +60,6 @@ function SaveGame() {
             "<span class='VeryLargeText'>Achievement Get!<br><br></span><span class='LargeText'>Small Beginnings</span><br><br><span class='SmallText'>Earn 100 Fries.</span>";
         showPopup(); 
     }
-
     if (FriesManager.get() >= 1000 && !Achievements.includes(" Getting Decent...")) {
         Achievements[AmountOfAchievements] = " Getting Decent...";
         AmountOfAchievements += 1;
@@ -79,7 +81,6 @@ function SaveGame() {
         "<span class='VeryLargeText'>Achievement Get!<br><br></span><span class='LargeText'>Factory Owner</span><br><br><span class='SmallText'>Earn 100000 Fries.</span>";
     showPopup(); 
     }
-
     //FPC_UpgradeLevel Achievements
     if (FPC_UpgradeLevel >= 2 && !Achievements.includes(" Clicker")) {
         Achievements[AmountOfAchievements] = " Clicker";
@@ -140,9 +141,9 @@ function SaveGame() {
 
     if (saveState.isEnabled()) {
         localStorage.setItem("FriesPerClick", FriesPerClick);
-        localStorage.setItem("FPC_UpgradeCost", FPC_UpgradeCost);
+        localStorage.setItem("ClickerUpgradeCost", ClickerUpgradeCost);
         localStorage.setItem("FriesPerSecond", FriesPerSecond);
-        localStorage.setItem("FPS_UpgradeCost", FPS_UpgradeCost);
+        localStorage.setItem("WorkersUpgradeCost", WorkersUpgradeCost);
         localStorage.setItem("FPC_UpgradeLevel", FPC_UpgradeLevel);
         localStorage.setItem("FPS_UpgradeLevel", FPS_UpgradeLevel);
         localStorage.setItem("FriesEarned", FriesManager.getRaw());
@@ -150,17 +151,10 @@ function SaveGame() {
     }
 }
 
-window.onload = function() {
+window.onload = function(F) {
     Fries.textContent = "Fries: " + formatFries(Math.round(FriesManager.get() * 10) / 10);
     resetPassiveGeneration();
-    StatsButton.style.whiteSpace = "pre-line";
-    StatsButton.textContent =
-        "Stats:\n_________________\nFries Per Click: " + formatFries(FriesPerClick) +
-        " | Level: " + FPC_UpgradeLevel +
-        "\nUpgrade Cost: " + formatFries(FPC_UpgradeCost) +
-        "\n_________________\nFries Per Second: " + formatFries(FriesPerSecond) +
-        " | Level: " + FPS_UpgradeLevel +
-        "\nUpgrade Cost: " + formatFries(FPS_UpgradeCost);
+
 
     // Load saved achievements
     const savedAchievements = JSON.parse(localStorage.getItem("Achievements")) || [];
@@ -199,62 +193,47 @@ ClickDiv.addEventListener("click", function() {
     Fries.textContent = "Fries: " + formatFries(Math.round(FriesManager.get() * 10) / 10);
 });
 
-const FriesPerClickUpgrade = document.getElementById("FPC_UpgradeButton");
+const FriesPerClickUpgrade = document.getElementById("UpgradeClicker");
 
 FriesPerClickUpgrade.addEventListener("click", function() {
-    FPC_UpgradeCost = Math.round(FPC_UpgradeCost);
-    if (FPC_UpgradeCost <= FriesManager.get()) {
-        FriesManager.subtract(FPC_UpgradeCost);
+    ClickerUpgradeCost = Math.round(ClickerUpgradeCost);
+    if (ClickerUpgradeCost <= FriesManager.get()) {
+        FriesManager.subtract(ClickerUpgradeCost);
         SaveGame();
         Fries.textContent = "Fries: " + formatFries(Math.round(FriesManager.get() * 10) / 10);
 
         FriesPerClick *= 1.2;
-        FPC_UpgradeCost *= 1.2;
+        ClickerUpgradeCost *= 1.2;
         FPC_UpgradeLevel += 1;
 
-        StatsButton.style.whiteSpace = "pre-line";
-        StatsButton.textContent =
-            "Stats:\n_________________\nFries Per Click: " + formatFries(FriesPerClick) +
-            " | Level: " + FPC_UpgradeLevel +
-            "\nUpgrade Cost: " + formatFries(FPC_UpgradeCost) +
-            "\n_________________\nFries Per Second: " + formatFries(FriesPerSecond) +
-            " | Level: " + FPS_UpgradeLevel +
-            "\nUpgrade Cost: " + formatFries(FPS_UpgradeCost);
+        
     } else {
         console.log("Not enough fries!");
     }
 });
 
-const FriesPerSecondUpgrade = document.getElementById("FPS_UpgradeButton");
+const FriesPerSecondUpgrade = document.getElementById("UpgradeWorkers");
 
 FriesPerSecondUpgrade.addEventListener("click", function() {
-    FPS_UpgradeCost = Math.round(FPS_UpgradeCost);
-    if (FPS_UpgradeCost <= FriesManager.get()) {
-        FriesManager.subtract(FPS_UpgradeCost);
+    WorkersUpgradeCost = Math.round(WorkersUpgradeCost);
+    if (WorkersUpgradeCost <= FriesManager.get()) {
+        FriesManager.subtract(WorkersUpgradeCost);
         SaveGame();
         Fries.textContent = "Fries: " + formatFries(Math.round(FriesManager.get() * 10) / 10);
 
         if (FriesPerSecond < 1) {
             FriesPerSecond += 1;
-            FriesPerSecond = Math.round(FriesPerSecond * 1.2 * 10) / 10;
-            FPS_UpgradeCost = Math.round(FPS_UpgradeCost * 1.2 * 10) / 10;
+            FriesPerSecond = Math.round(FriesPerSecond * 1.3 * 10) / 10;
+            WorkersUpgradeCost = Math.round(WorkersUpgradeCost * 1.3 * 10) / 10;
             FriesPerSecond -= 1;
         } else {
-            FriesPerSecond = Math.round(FriesPerSecond * 1.2 * 10) / 10;
-            FPS_UpgradeCost = Math.round(FPS_UpgradeCost * 1.2 * 10) / 10;
+            FriesPerSecond = Math.round(FriesPerSecond * 1.3 * 10) / 10;
+            WorkersUpgradeCost = Math.round(WorkersUpgradeCost * 1.3 * 10) / 10;
         }
 
         FPS_UpgradeLevel += 1;
 
-        StatsButton.style.whiteSpace = "pre-line";
-        StatsButton.textContent =
-            "Stats:\n_________________\nFries Per Click: " + formatFries(FriesPerClick) +
-            " | Level: " + FPC_UpgradeLevel +
-            "\nUpgrade Cost: " + formatFries(FPC_UpgradeCost) +
-            "\n_________________\nFries Per Second: " + formatFries(FriesPerSecond) +
-            " | Level: " + FPS_UpgradeLevel +
-            "\nUpgrade Cost: " + formatFries(FPS_UpgradeCost);
-
+        
         resetPassiveGeneration();
     } else {
         console.log("Not enough fries!");
@@ -324,8 +303,8 @@ function resetPassiveGeneration() {
 }
 
 function updateButtonStyles() {
-    FriesPerClickUpgrade.style.backgroundColor = (FriesManager.get() >= FPC_UpgradeCost) ? "#F5F5F5" : "#707070";
-    FriesPerSecondUpgrade.style.backgroundColor = (FriesManager.get() >= FPS_UpgradeCost) ? "#F5F5F5" : "#707070";
+    FriesPerClickUpgrade.style.backgroundColor = (FriesManager.get() >= ClickerUpgradeCost) ? "#F5F5F5" : "#707070";
+    FriesPerSecondUpgrade.style.backgroundColor = (FriesManager.get() >= WorkersUpgradeCost) ? "#F5F5F5" : "#707070";
 }
 
 setInterval(updateButtonStyles, 20);
@@ -333,36 +312,20 @@ setInterval(() => SaveGame(), 100);
 
 document.getElementById("FreeUpgradeStyles").addEventListener("click", function () {
     this.textContent = "Activated!";
-    FPC_UpgradeCost = 0;
-    FPS_UpgradeCost = 0;
-    localStorage.setItem("FPC_UpgradeCost", FPC_UpgradeCost);
-    localStorage.setItem("FPS_UpgradeCost", FPS_UpgradeCost);
+    ClickerUpgradeCost = 0;
+    WorkersUpgradeCost = 0;
+    localStorage.setItem("ClickerUpgradeCost", ClickerUpgradeCost);
+    localStorage.setItem("WorkersUpgradeCost", WorkersUpgradeCost);
 });
 
 function formatFries(count) {
-    const suffixes = ["", " thousand", " million", " billion", " trillion", " quadrillion", " quintillion", " sextillion"];
+    const suffixes = ["", " thousand", " million", " billion", " trillion", " quadrillion", " quintillion", " sextillion", " septillion", " octillion", " nonillion"];
     if (count < 1000) return Math.round(count * 10) / 10;
     const tier = Math.min(Math.floor(Math.log10(count) / 3), suffixes.length - 1);
     const scale = Math.pow(10, tier * 3);
     return (count / scale).toFixed(2) + suffixes[tier];
 }
 
-function Bonus() {
-    const EasterEgg = "fr33H@CK5.4me";
-    const JerryEgg = 'Jerry'
-    const userInput = prompt("You found the bonus!");
-    if (userInput && userInput.trim() === EasterEgg) {
-        saveState.disable();
-        SecretMenu.style.display = (SecretMenu.style.display === "none") ? "block" : "none";
-        alert("This is allowed, right?");
-    }
-    else if (userInput && userInput.trim() === JerryEgg) {
-        alert("JERREHHHHH")
-        JerrySecret = true;
-    } else {
-        alert("What did you expect anyway?");
-    }
-}
 
 function ResetProgress() {
     if (window.confirm("Are you sure you want to do this?")) {
@@ -374,22 +337,15 @@ function ResetProgress() {
         AmountOfAchievements = 1;
         totalSeconds = 0;
         FriesPerClick = 1;
-        FPC_UpgradeCost = 15;
+        ClickerUpgradeCost = 15;
         FriesPerSecond = 0;
-        FPS_UpgradeCost = 20;
+        WorkersUpgradeCost = 20;
         FPC_UpgradeLevel = 1;
         FPS_UpgradeLevel = 1;
         JerrySecret = false;
         SaveGame();
         document.getElementById("AchievementsList").textContent = ("Achievements:\n\n"+"\u2022 "+Achievements);
         Fries.textContent = "Fries: " + formatFries(FriesManager.get());
-        StatsButton.textContent =
-            "Stats:\n_________________\nFries Per Click: " + formatFries(FriesPerClick) +
-            " | Level: " + FPC_UpgradeLevel +
-            "\nUpgrade Cost: " + formatFries(FPC_UpgradeCost) +
-            "\n_________________\nFries Per Second: " + formatFries(FriesPerSecond) +
-            " | Level: " + FPS_UpgradeLevel +
-            "\nUpgrade Cost: " + formatFries(FPS_UpgradeCost);
         document.getElementById("timer").textContent = "Time: 0d 00h 00m 00s";
     }
 }
@@ -437,4 +393,86 @@ function toggleMusic() {
     music.play();
   }
   isPlaying = !isPlaying;
+}
+
+
+function UpdateUpgradesBox() {
+    document.getElementById("UpgradesBoxUnderlineText").textContent = ("Upgrades");
+    UpgradesBoxUnderlineText.style.textDecoration = "underline"}
+
+UpdateUpgradesBox()
+
+
+function upgradeClickerInfoShow() {
+    document.getElementById("UpgradeItemsInfo").innerHTML =
+    "A simple upgrade for your cursor.<br>----------------------------<br>Upgrade Cost: "+ formatFries(Math.round(ClickerUpgradeCost))+ "<br>----------------------------<br>Fries per click: "+formatFries(Math.round(FriesPerClick))+"<br>----------------------------<br>Fries per click after upgrading: "+formatFries(FriesPerClick*1.2)+"<br>----------------------------<br>Upgrade level:"+formatFries(FPC_UpgradeLevel);
+        let div = document.getElementById("UpgradeItemsInfo");
+        div.style.opacity = "1";
+  }
+
+function upgradeItemsInfoHide() {
+        let div = document.getElementById("UpgradeItemsInfo");
+        div.style.opacity = "0";
+
+}
+
+
+function UpdateClickerInfoAfterUpgrade() {
+    setTimeout(function() {
+        document.getElementById("UpgradeItemsInfo").innerHTML =
+        "A simple upgrade for your cursor.<br>----------------------------<br>Upgrade Cost: "+ formatFries(Math.round(ClickerUpgradeCost))+ "<br>----------------------------<br>Fries per click: "+formatFries(Math.round(FriesPerClick))+"<br>----------------------------<br>Fries per click after upgrading: "+formatFries(FriesPerClick*1.2)+"<br>----------------------------<br>Upgrade level: "+formatFries(FPC_UpgradeLevel);
+      }, 50);
+
+
+}
+
+function upgradeWorkersInfoShow() {
+    document.getElementById("UpgradeItemsInfo").innerHTML =
+    "A simple upgrade for your fries per second.<br>----------------------------<br>Upgrade Cost: "+ formatFries(Math.round(WorkersUpgradeCost))+ "<br>----------------------------<br>Fries per second: "+formatFries(Math.round(FriesPerSecond))+"<br>----------------------------<br>Fries per second after upgrading: "+formatFries(Math.round(FriesPerSecond*1.3))+"<br>----------------------------<br>Upgrade level: "+formatFries(FPS_UpgradeLevel);
+        let div = document.getElementById("UpgradeItemsInfo");
+        div.style.opacity = "1";
+}
+
+function UpdateWorkersInfoAfterUpgrade() {
+    setTimeout(function() {
+        document.getElementById("UpgradeItemsInfo").innerHTML =
+        "A simple upgrade for your fries per second.<br>----------------------------<br>Upgrade Cost: "+ formatFries(Math.round(WorkersUpgradeCost))+ "<br>----------------------------<br>Fries per second: "+formatFries(Math.round(FriesPerSecond))+"<br>----------------------------<br>Fries per second after upgrading: "+formatFries(Math.round(FriesPerSecond*1.3))+"<br>----------------------------<br>Upgrade level: "+formatFries(FPS_UpgradeLevel);
+      }, 50);
+
+
+}
+
+function autoResizeText() {
+    const box = document.getElementById("UpgradeItemsInfo");
+    let fontSize = 27; // start from your preferred size
+    box.style.fontSize = fontSize + "px";
+
+    while (box.scrollHeight > box.clientHeight || box.scrollWidth > box.clientWidth) {
+        fontSize--;
+        box.style.fontSize = fontSize + "px";
+        if (fontSize <= 10) break; // stop shrinking at 10px
+    }
+}
+
+// Run on load
+window.onload = autoResizeText;
+// Run whenever the window resizes
+window.onresize = autoResizeText;
+
+window.onload = updateFries;
+
+function updateFries() {
+    document.getElementById("Fries").textContent = ("Fries: " + FriesManager.get());
+}
+
+const div = document.getElementById('myDiv');
+let isdarkshade = false;
+
+function toggleColor() {
+  if (isdarkshade) {
+    div.style.backgroundColor = "white";
+  } else {
+    div.style.backgroundColor = "black";
+  }
+  isdarkshade = !isdarkshade;
 }
