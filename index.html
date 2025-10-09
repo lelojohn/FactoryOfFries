@@ -9,10 +9,8 @@
     </head>
     <body>
         <button id="Fries">Fries: </button>
-        <button id="Clicker">Click to earn fries</button>
-        <button id="FPC_UpgradeButton">Click to upgrade fries per click</button>
-        <button id="FPS_UpgradeButton">Click to upgrade fries per second</button>
-        <button id="StatsButton">Stats:<br>_________________<br>Fries per click: 1 | Level: 1<br>Upgrade Cost: 15<br>_________________<br>Fries per second: 0 | Level: 1<br>Upgrade Cost: 20</button>
+        <button id="Clicker">Click here to earn fries</button>
+        <!-- <button id="StatsButton">Stats:<br>_________________<br>Fries per click: 1 | Level: 1<br>Upgrade Cost: 15<br>_________________<br>Fries per second: 0 | Level: 1<br>Upgrade Cost: 20</button> -->
         <div id="ResetProgressButton" onclick="ResetProgress()">Reset Progress</div>
         <div id="Secret" onclick="Bonus()"></div>
         <div id="SecretMenu" style="display: none;">What hacks do you want?<br>____________________<br>Free Upgrades:<button id="FreeUpgradeStyles">Activate</button></div>
@@ -30,6 +28,9 @@
         Your browser does not support the audio element.
       </audio>
       
-    <script src="FOF.js"></script>
+    <div id="Upgradesbox"><span id="UpgradesBoxUnderlineText">Upgrades</span><div id="UpgradeClicker" onmouseover="upgradeClickerInfoShow(), autoResizeText()" onmouseout="upgradeItemsInfoHide(),autoResizeText()" onclick="UpdateClickerInfoAfterUpgrade()"> Cursor</div><div id="UpgradeWorkers" onmouseover="upgradeWorkersInfoShow(),autoResizeText()" onmouseout="upgradeItemsInfoHide(),autoResizeText()" onclick="UpdateWorkersInfoAfterUpgrade()">Workers</div></div>
+      <div id="UpgradeItemsInfo"><span id="InfoUnderlineText">Info</span></div>
+      <!-- <button onclick="toggleMusic()">Play/Pause Music</button> -->
+    <script src="FOF.js" defer></script>
     </body>
 </html>
