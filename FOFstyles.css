@@ -1,25 +1,33 @@
+body {
+    background-color: white;
+}
+
 #Fries {
     position: fixed;
-    top:25px;right:50px;
+    top:30px;left: 65px;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 30px;
+    font-size: 20px;
     border: 5px solid green;
     color: black;
     background-color: lime;
     border-radius: 15px;
     text-align: center;
-    padding-left: 14px;
-    padding-right: 14px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-left: 7px;
+    padding-right: 7px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    transform: scale(120%);
+    width: 250px;
+    height: 60px;
 }
 
 #Clicker {
+    background-image:url('Fries.png');
     position: fixed;
-    top:25px;left:50px;
+    top:50px;left:0px;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 30px;
-    border: 5px solid black;
+    font-size: 50px;
+    border: 10px solid black;
     color: black;
     background-color: white;
     border-radius: 15px;
@@ -29,8 +37,12 @@
     padding-top: 10px;
     padding-bottom: 10px;
     box-shadow: 0 4px grey;
-    transition: transform 0.1s, box-shadow 0.1s;
+    transition: all 0.1s ease;
     cursor:pointer;
+    height: 500px;
+    width:380px;
+    z-index: 1;
+    transform:scale(80%);
 }
 
 #Clicker:hover {
@@ -38,36 +50,7 @@
 }
 
 #Clicker:active {
-    transform: translateY(2px);
-    box-shadow: 0 2px grey;
-}
-
-#FPC_UpgradeButton {
-    position: fixed;
-    top:125px;left:50px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 30px;
-    border: 5px solid black;
-    color: black;
-    background-color: white;
-    border-radius: 15px;
-    text-align: center;
-    padding-left: 14px;
-    padding-right: 14px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    box-shadow: 0 4px grey;
-    transition: transform 0.1s, box-shadow 0.1s;
-    cursor:pointer;
-}
-
-#FPC_UpgradeButton:hover {
-    background-color: whitesmoke;
-}
-
-#FPC_UpgradeButton:active {
-    transform: translateY(2px);
-    box-shadow: 0 2px grey;
+    transform: scale(78%);
 }
 
 #StatsButton {
@@ -248,6 +231,7 @@
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     opacity: 0;
     transition: top 0.5s ease-out, opacity 0.5s ease-out;
+    z-index: 2;
 }
 
 
@@ -269,4 +253,82 @@
 .SmallText {
     font-size: 15px;
     font-family: Arial, Helvetica, sans-serif;
+}
+
+#UpgradesBoxUnderlineText {
+    font-size: 30px;
+    text-decoration: underline;
+    font-size: 30px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#Upgradesbox {
+    left:30%;
+    top:10%;
+    position: absolute;
+    color: black;
+    width: 400px;
+    height: 500px;
+    border: solid 4px black;
+    padding: 10px;
+    border-radius: 30px;
+    background-color: grey;
+    text-align: center;
+}
+
+#UpgradeClicker {
+    background-color: whitesmoke;
+    width: 380px;
+    border:solid 4px black;
+    top:10px;
+    left:5px;
+    position: relative;
+    font-size: 35px;
+    font-family:Arial, Helvetica, sans-serif;
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-radius: 10px;
+    Cursor: pointer;
+    transition: 0.5s ease;
+}
+
+
+#UpgradeItemsInfo {
+    background-color: whitesmoke;
+    width: 400px;
+    height: 350px;
+    border:solid 4px black;
+    top:1%;
+    right: 1%;
+    position: absolute;
+    font-size: 27px;
+    font-family:Arial, Helvetica, sans-serif;
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-radius: 10px;
+    opacity: 0;
+    padding: 20px;
+}
+
+#InfoUnderlineText {
+    text-decoration: underline;
+}
+
+#UpgradeWorkers {
+    background-color: whitesmoke;
+    width: 380px;
+    border:solid 4px black;
+    top:20px;
+    left:5px;
+    position: relative;
+    font-size: 35px;
+    font-family:Arial, Helvetica, sans-serif;
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-radius: 10px;
+    Cursor: pointer;
+    transition: 0.3s ease;
 }
