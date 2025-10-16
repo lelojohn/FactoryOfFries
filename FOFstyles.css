@@ -1,5 +1,9 @@
 body {
     background-color: white;
+    transform: scale(calc(100vw / 1920));
+    transform-origin: top left;
+    width: 1920px;
+      
 }
 
 #Fries {
@@ -19,6 +23,7 @@ body {
     transform: scale(120%);
     width: 250px;
     height: 60px;
+    -webkit-user-select: none;
 }
 
 #Clicker {
@@ -43,6 +48,13 @@ body {
     width:380px;
     z-index: 1;
     transform:scale(80%);
+      user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+
+  
+  -webkit-user-drag: none;
 }
 
 #Clicker:hover {
@@ -67,6 +79,7 @@ body {
     padding-right: 14px;
     padding-top: 10px;
     padding-bottom: 10px;
+    -webkit-user-select: none;
 }
 
 #TimePlayed {
@@ -81,12 +94,14 @@ body {
     background-color: #4CAF50;
     color: white;
     cursor: pointer;
+    -webkit-user-select: none;
   }
 
   #timer {
     font-size: 24px;
     margin-top: 50px;
     text-align: center;
+    -webkit-user-select: none;
   }
 
   #FPS_UpgradeButton {
@@ -106,6 +121,7 @@ body {
     box-shadow: 0 4px grey;
     transition: transform 0.1s, box-shadow 0.1s;
     cursor:pointer;
+    -webkit-user-select: none;
 }
 
 #FPS_UpgradeButton:hover {
@@ -139,6 +155,7 @@ body {
     cursor: pointer;
     font-family: Arial, Helvetica, sans-serif;
     text-align: center;
+    -webkit-user-select: none;
 }
 
 #Secret {
@@ -155,6 +172,7 @@ body {
     cursor: pointer;
     font-family: Arial, Helvetica, sans-serif;
     text-align: center;
+    -webkit-user-select: none;
 }
 
 #SecretMenu {
@@ -171,6 +189,7 @@ body {
     padding-right: 16px;
     padding-top: 10px;
     padding-bottom: 10px;
+    -webkit-user-select: none;
 }
 
 #FreeUpgradeStyles {
@@ -200,14 +219,14 @@ body {
     cursor: pointer;
     font-family: Arial, Helvetica, sans-serif;
     text-align: center;
+    -webkit-user-select: none;
 }
 
 #AchievementsList {
     position: fixed;
     width: 200px;
-    bottom: 40%;
-    left: 80%;
-    transform: translateX(-50%);
+    bottom: 3%;
+    left: 65%;
     padding: 23px 16px;
     font-size: 16px;
     border: none;
@@ -216,6 +235,7 @@ body {
     color: white;
     font-family: Arial, Helvetica, sans-serif;
     text-align: center;
+    -webkit-user-select: none;
 }
 
 #achievementPopup {
@@ -232,6 +252,7 @@ body {
     opacity: 0;
     transition: top 0.5s ease-out, opacity 0.5s ease-out;
     z-index: 2;
+    -webkit-user-select: none;
 }
 
 
@@ -274,6 +295,7 @@ body {
     border-radius: 30px;
     background-color: grey;
     text-align: center;
+    -webkit-user-select: none;
 }
 
 #UpgradeClicker {
@@ -291,13 +313,14 @@ body {
     border-radius: 10px;
     Cursor: pointer;
     transition: 0.5s ease;
+    -webkit-user-select: none;
 }
 
 
 #UpgradeItemsInfo {
     background-color: whitesmoke;
     width: 400px;
-    height: 350px;
+    height: 300px;
     border:solid 4px black;
     top:1%;
     right: 1%;
@@ -310,6 +333,7 @@ body {
     border-radius: 10px;
     opacity: 0;
     padding: 20px;
+    -webkit-user-select: none;
 }
 
 #InfoUnderlineText {
@@ -331,4 +355,5 @@ body {
     border-radius: 10px;
     Cursor: pointer;
     transition: 0.3s ease;
+    -webkit-user-select: none;
 }
