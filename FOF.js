@@ -66,21 +66,21 @@ function SaveGame() {
         Achievements[AmountOfAchievements] = " Getting Decent...";
         AmountOfAchievements += 1;
         document.getElementById("achievementPopup").innerHTML = 
-        "<span class='VeryLargeText'>Achievement Get!<br><br></span><span class='LargeText'>Getting Decent...</span><br><br><span class='SmallText'>Earn 1000 Fries.</span>";
+        "<span class='VeryLargeText'>Achievement Get!<br><br></span><span class='LargeText'>Getting Decent...</span><br><br><span class='SmallText'>Earn 1,000 Fries.</span>";
     showPopup(); 
     }
     if (FriesManager.get() >= 10000 && !Achievements.includes(" Frymaster")) {
         Achievements[AmountOfAchievements] = " Frymaster";
         AmountOfAchievements += 1;
         document.getElementById("achievementPopup").innerHTML = 
-        "<span class='VeryLargeText'>Achievement Get!<br><br></span><span class='LargeText'>Frymaster</span><br><br><span class='SmallText'>Earn 10000 Fries.</span>";
+        "<span class='VeryLargeText'>Achievement Get!<br><br></span><span class='LargeText'>Frymaster</span><br><br><span class='SmallText'>Earn 10,000 Fries.</span>";
     showPopup(); 
     }
     if (FriesManager.get() >= 100000 && !Achievements.includes(" Factory Owner")) {
         Achievements[AmountOfAchievements] = " Factory Owner";
         AmountOfAchievements += 1;
         document.getElementById("achievementPopup").innerHTML = 
-        "<span class='VeryLargeText'>Achievement Get!<br><br></span><span class='LargeText'>Factory Owner</span><br><br><span class='SmallText'>Earn 100000 Fries.</span>";
+        "<span class='VeryLargeText'>Achievement Get!<br><br></span><span class='LargeText'>Factory Owner</span><br><br><span class='SmallText'>Earn 100,000 Fries.</span>";
     showPopup(); 
     }
     //FPC_UpgradeLevel Achievements
@@ -351,7 +351,7 @@ function DisplayAchievements() {
 
 }
 
-let Achievements = [" The Journey Begins"]
+let Achievements = [""]
 
 let AmountOfAchievements = 1;
 Achievements[AmountOfAchievements] = " The Journey Begins";
@@ -450,7 +450,7 @@ window.onresize = autoResizeText;
 
 
 function updateFries() {
-    document.getElementById("Fries").textContent = ("Fries: " + FriesManager.get());
+    document.getElementById("Fries").textContent = ("Fries: " + formatFries(FriesManager.get()));
 }
 
 const div = document.getElementById('myDiv');
