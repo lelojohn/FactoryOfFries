@@ -158,53 +158,6 @@ body {
     -webkit-user-select: none;
 }
 
-#Secret {
-    position: fixed;
-    bottom: 2px;
-    left: 99%;
-    transform: translateX(-50%);
-    padding: 1px 1px;
-    font-size: 3px;
-    border: none;
-    border-radius: 8px;
-    background-color: white;
-    color: white;
-    cursor: pointer;
-    font-family: Arial, Helvetica, sans-serif;
-    text-align: center;
-    -webkit-user-select: none;
-}
-
-#SecretMenu {
-    position: fixed;
-    top:20%;left:55%;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 30px;
-    border: 5px solid black;
-    color: black;
-    background-color: white;
-    border-radius: 15px;
-    text-align:10px;
-    padding-left: 16px;
-    padding-right: 16px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    -webkit-user-select: none;
-}
-
-#FreeUpgradeStyles {
-    position: fixed;
-    padding: 10px 8px;
-    font-size: 16px;
-    border: none;
-    border-radius: 8px;
-    background-color: grey;
-    color: white;
-    cursor: pointer;
-    font-family: Arial, Helvetica, sans-serif;
-    text-align: center;
-}
-
 #AchievementsButton {
     position: fixed;
     bottom: 26.5%;
