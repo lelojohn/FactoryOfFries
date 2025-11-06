@@ -81,7 +81,8 @@ function SaveGame() {
         AmountOfAchievements += 1;
         document.getElementById("achievementPopup").innerHTML = 
         "<span class='VeryLargeText'>Achievement Get!<br><br></span><span class='LargeText'>Factory Owner</span><br><br><span class='SmallText'>Earn 100,000 Fries.</span>";
-    showPopup(); 
+    showPopup();
+    effects();
     }
     //FPC_UpgradeLevel Achievements
     if (FPC_UpgradeLevel >= 2 && !Achievements.includes(" Clicker")) {
@@ -298,13 +299,7 @@ function updateButtonStyles() {
 setInterval(updateButtonStyles, 20);
 setInterval(() => SaveGame(), 100);
 
-document.getElementById("FreeUpgradeStyles").addEventListener("click", function () {
-    this.textContent = "Activated!";
-    ClickerUpgradeCost = 0;
-    WorkersUpgradeCost = 0;
-    localStorage.setItem("ClickerUpgradeCost", ClickerUpgradeCost);
-    localStorage.setItem("WorkersUpgradeCost", WorkersUpgradeCost);
-});
+
 
 function formatFries(count) {
     const suffixes = ["", " thousand", " million", " billion", " trillion", " quadrillion", " quintillion", " sextillion", " septillion", " octillion", " nonillion"];
@@ -409,6 +404,7 @@ function UpdateClickerInfoAfterUpgrade() {
     setTimeout(function() {
         document.getElementById("UpgradeItemsInfo").innerHTML =
         "A simple upgrade for your cursor.<br>----------------------------<br>Upgrade Cost: "+ formatFries(Math.round(ClickerUpgradeCost))+ "<br>----------------------------<br>Fries per click: "+formatFries(Math.round(FriesPerClick))+"<br>----------------------------<br>Fries per click after upgrading: "+formatFries(FriesPerClick*1.2)+"<br>----------------------------<br>Upgrade level: "+formatFries(FPC_UpgradeLevel);
+        autoResizeText()
       }, 50);
 
 
@@ -425,7 +421,8 @@ function UpdateWorkersInfoAfterUpgrade() {
     setTimeout(function() {
         document.getElementById("UpgradeItemsInfo").innerHTML =
         "A simple upgrade for your fries per second.<br>----------------------------<br>Upgrade Cost: "+ formatFries(Math.round(WorkersUpgradeCost))+ "<br>----------------------------<br>Fries per second: "+formatFries(Math.round(FriesPerSecond))+"<br>----------------------------<br>Fries per second after upgrading: "+formatFries(Math.round(FriesPerSecond*1.3))+"<br>----------------------------<br>Upgrade level: "+formatFries(FPS_UpgradeLevel);
-      }, 50);
+        autoResizeText()
+    }, 50);
 
 
 }
@@ -491,3 +488,30 @@ window.addEventListener("load", function() {
     // ✅ Update Fries text once
     updateFries();
 });
+
+function effects() {
+ if (Achievements.includes(" Factory Owner")) {
+    
+ }   
+}
+
+function effects() {
+
+    //run function here 
+
+    const minSeconds = 2;
+    const maxSeconds = 10;
+    const randomDelay = (Math.random() * (maxSeconds - minSeconds) + minSeconds) * 1000;
+  
+
+    setTimeout(effects, randomDelay);
+  }
+  
+  function startRandomInterval() {
+    const minSeconds = 2;
+    const maxSeconds = 10;
+    const randomDelay = (Math.random() * (maxSeconds - minSeconds) + minSeconds) * 60 * 1000;
+  
+
+    setTimeout(effects, randomDelay);
+  }
