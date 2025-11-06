@@ -8,12 +8,11 @@
         <link rel="icon" href="Logo.png">
     </head>
     <body>
-        <button id="Fries">Fries: </button>
+      <div id="pageWrapper">
+      <button id="Fries">Fries: </button>
         <button id="Clicker">Click here to earn fries</button>
         <!-- <button id="StatsButton">Stats:<br>_________________<br>Fries per click: 1 | Level: 1<br>Upgrade Cost: 15<br>_________________<br>Fries per second: 0 | Level: 1<br>Upgrade Cost: 20</button> -->
         <div id="ResetProgressButton" onclick="ResetProgress()">Reset Progress</div>
-        <div id="Secret" onclick="Bonus()"></div>
-        <div id="SecretMenu" style="display: none;">What hacks do you want?<br>____________________<br>Free Upgrades:<button id="FreeUpgradeStyles">Activate</button></div>
         <div id="AchievementsButton" onclick="DisplayAchievements()">Achievements</div>
         <div id="AchievementsList" style="display: none;">Achievements:</div>
 
@@ -32,5 +31,6 @@
       <div id="UpgradeItemsInfo"><span id="InfoUnderlineText">Info</span></div>
       <!-- <button onclick="toggleMusic()">Play/Pause Music</button> -->
     <script src="FOF.js" defer></script>
+  </div>  
     </body>
 </html>
