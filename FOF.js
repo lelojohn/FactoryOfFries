@@ -9,7 +9,7 @@ const FriesManager = (() => {
     return {
         get: () => _value,
         add: (amount) => {
-            _value += amount;
+            _value += amount * globalFriesMultiplier;
             localStorage.setItem("FriesEarned", _value);
             localStorage.setItem("FriesEarnedHash", generateHash(_value));
         },
@@ -27,6 +27,8 @@ const FriesManager = (() => {
     };
 })();
 
+let globalFriesMultiplier = 1;
+let friesBoostTimeout = null;
 
 
 let FriesPerClick = parseFloat(localStorage.getItem("FriesPerClick")) || 1;
@@ -388,7 +390,7 @@ UpdateUpgradesBox()
 
 function upgradeClickerInfoShow() {
     document.getElementById("UpgradeItemsInfo").innerHTML =
-    "A simple upgrade for your cursor.<br>----------------------------<br>Upgrade Cost: "+ formatFries(Math.round(ClickerUpgradeCost))+ "<br>----------------------------<br>Fries per click: "+formatFries(Math.round(FriesPerClick))+"<br>----------------------------<br>Fries per click after upgrading: "+formatFries(FriesPerClick*1.2)+"<br>----------------------------<br>Upgrade level:"+formatFries(FPC_UpgradeLevel);
+    "A simple upgrade for your cursor.<br>----------------------------<br>Upgrade Cost: "+ formatFries(Math.round(ClickerUpgradeCost))+ "<br>----------------------------<br>Fries per click: "+formatFries(Math.round(FriesPerClick * globalFriesMultiplier))+"<br>----------------------------<br>Fries per click after upgrading: "+formatFries(FriesPerClick*1.2)+"<br>----------------------------<br>Upgrade level:"+formatFries(FPC_UpgradeLevel);
         let div = document.getElementById("UpgradeItemsInfo");
         div.style.opacity = "1";
   }
@@ -403,7 +405,7 @@ function upgradeItemsInfoHide() {
 function UpdateClickerInfoAfterUpgrade() {
     setTimeout(function() {
         document.getElementById("UpgradeItemsInfo").innerHTML =
-        "A simple upgrade for your cursor.<br>----------------------------<br>Upgrade Cost: "+ formatFries(Math.round(ClickerUpgradeCost))+ "<br>----------------------------<br>Fries per click: "+formatFries(Math.round(FriesPerClick))+"<br>----------------------------<br>Fries per click after upgrading: "+formatFries(FriesPerClick*1.2)+"<br>----------------------------<br>Upgrade level: "+formatFries(FPC_UpgradeLevel);
+        "A simple upgrade for your cursor.<br>----------------------------<br>Upgrade Cost: "+ formatFries(Math.round(ClickerUpgradeCost))+ "<br>----------------------------<br>Fries per click: "+formatFries(Math.round(FriesPerClick  * globalFriesMultiplier))+"<br>----------------------------<br>Fries per click after upgrading: "+formatFries(FriesPerClick*1.2)+"<br>----------------------------<br>Upgrade level: "+formatFries(FPC_UpgradeLevel);
         autoResizeText()
       }, 50);
 
@@ -412,7 +414,7 @@ function UpdateClickerInfoAfterUpgrade() {
 
 function upgradeWorkersInfoShow() {
     document.getElementById("UpgradeItemsInfo").innerHTML =
-    "A simple upgrade for your fries per second.<br>----------------------------<br>Upgrade Cost: "+ formatFries(Math.round(WorkersUpgradeCost))+ "<br>----------------------------<br>Fries per second: "+formatFries(Math.round(FriesPerSecond))+"<br>----------------------------<br>Fries per second after upgrading: "+formatFries(Math.round(FriesPerSecond*1.3))+"<br>----------------------------<br>Upgrade level: "+formatFries(FPS_UpgradeLevel);
+    "A simple upgrade for your fries per second.<br>----------------------------<br>Upgrade Cost: "+ formatFries(Math.round(WorkersUpgradeCost))+ "<br>----------------------------<br>Fries per second: "+formatFries(Math.round(FriesPerSecond  * globalFriesMultiplier))+"<br>----------------------------<br>Fries per second after upgrading: "+formatFries(Math.round(FriesPerSecond*1.3))+"<br>----------------------------<br>Upgrade level: "+formatFries(FPS_UpgradeLevel);
         let div = document.getElementById("UpgradeItemsInfo");
         div.style.opacity = "1";
 }
@@ -420,7 +422,7 @@ function upgradeWorkersInfoShow() {
 function UpdateWorkersInfoAfterUpgrade() {
     setTimeout(function() {
         document.getElementById("UpgradeItemsInfo").innerHTML =
-        "A simple upgrade for your fries per second.<br>----------------------------<br>Upgrade Cost: "+ formatFries(Math.round(WorkersUpgradeCost))+ "<br>----------------------------<br>Fries per second: "+formatFries(Math.round(FriesPerSecond))+"<br>----------------------------<br>Fries per second after upgrading: "+formatFries(Math.round(FriesPerSecond*1.3))+"<br>----------------------------<br>Upgrade level: "+formatFries(FPS_UpgradeLevel);
+        "A simple upgrade for your fries per second.<br>----------------------------<br>Upgrade Cost: "+ formatFries(Math.round(WorkersUpgradeCost))+ "<br>----------------------------<br>Fries per second: "+formatFries(Math.round(FriesPerSecond  * globalFriesMultiplier))+"<br>----------------------------<br>Fries per second after upgrading: "+formatFries(Math.round(FriesPerSecond*1.3))+"<br>----------------------------<br>Upgrade level: "+formatFries(FPS_UpgradeLevel);
         autoResizeText()
     }, 50);
 
@@ -473,45 +475,103 @@ function loadAchievementsFromStorage() {
 }
 
 window.addEventListener("load", function() {
-    // ✅ Load Achievements first
+
     loadAchievementsFromStorage();
 
-    // ✅ Update Fries display
     Fries.textContent = "Fries: " + formatFries(Math.round(FriesManager.get() * 10) / 10);
 
-    // ✅ Reset passive income interval
     resetPassiveGeneration();
 
-    // ✅ Auto-resize upgrade info text
     autoResizeText();
 
-    // ✅ Update Fries text once
     updateFries();
+
+    effects();
 });
 
-function effects() {
+function startEffects() {
  if (Achievements.includes(" Factory Owner")) {
-    
+    effects()
  }   
 }
 
 function effects() {
 
-    //run function here 
-
-    const minSeconds = 2;
-    const maxSeconds = 10;
+    const minSeconds = 200;
+    const maxSeconds = 1000;
     const randomDelay = (Math.random() * (maxSeconds - minSeconds) + minSeconds) * 1000;
-  
 
-    setTimeout(effects, randomDelay);
-  }
-  
-  function startRandomInterval() {
-    const minSeconds = 2;
-    const maxSeconds = 10;
-    const randomDelay = (Math.random() * (maxSeconds - minSeconds) + minSeconds) * 60 * 1000;
-  
+    console.log("Waiting", randomDelay /1000, "seconds before random event…");
 
-    setTimeout(effects, randomDelay);
-  }
+    setTimeout(() => {
+
+        function getRandomInteger(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        const randomNum = getRandomInteger(1, 10);
+        console.log("Random Event:", randomNum);
+
+        if (randomNum == 1 || 2) {
+            document.getElementById("achievementPopup").innerHTML =
+                "<span class='LargeText'>Your fries business is booming! +10% Fries!!</span>";
+            showPopup();
+            FriesManager.add(FriesManager.get() * 0.1);
+        }
+
+        else if (randomNum == 3) {
+            document.getElementById("achievementPopup").innerHTML =
+                "<span class='LargeText'>No one is buying your fries... -10% Fries.</span>";
+            showPopup();
+            FriesManager.add(FriesManager.get() * -0.1);
+        }
+
+        else if (randomNum == 4) {
+            document.getElementById("achievementPopup").innerHTML =
+                "<span class='LargeText'>Your workers actually like their job for once! 2x fries for 1 minute!</span>";
+            showPopup();
+
+            if (friesBoostTimeout !== null) {
+                clearTimeout(friesBoostTimeout);
+                friesBoostTimeout = null;
+            }
+
+            globalFriesMultiplier = 2;
+
+            friesBoostTimeout = setTimeout(() => {
+                globalFriesMultiplier = 1;
+                friesBoostTimeout = null;
+
+                document.getElementById("achievementPopup").innerHTML =
+                    "<span class='LargeText'>Your Fries Boost Has Ended.</span>";
+                showPopup();
+            }, 60000);
+        }
+
+        else if (randomNum == 5) {
+
+            document.getElementById("achievementPopup").innerHTML =
+                "<span class='LargeText'>Your machines broke down! No Fries Per Second for 1 minute!</span>";
+            showPopup();
+
+            const oldFPS = FriesPerSecond;
+
+            FriesPerSecond = 0;
+
+            setTimeout(() => {
+
+                FriesPerSecond = oldFPS;
+
+                document.getElementById("achievementPopup").innerHTML =
+                    "<span class='LargeText'>Your machines are fixed! FPS restored.</span>";
+                showPopup();
+            }, 60000);
+        }
+
+
+        effects(); 
+
+    }, randomDelay);
+}
